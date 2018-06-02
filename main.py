@@ -1,15 +1,13 @@
 import matplotlib
 matplotlib.use('TkAgg') #Stops crashing
-
 from tkinter import * 
-
 import sys
 sys.path.append('/Users/Cactus/wiki-word-frequency/Google-Search-API')
 from google import google
 
 def find_url(search_term):
-	id = google.search(search_term)
-	print(id)
+	result = google.search(search_term)
+	print(result)
 
 if __name__ == "__main__":
 	def do():
