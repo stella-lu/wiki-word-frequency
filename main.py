@@ -10,8 +10,6 @@ def find_url(search_term):
 	print(result)
 
 if __name__ == "__main__":
-	def do():
-		graph.main()
 	def get_text_button(): #On button click
 		find_url(search.get())
 	def get_text_enter(search): #On pressing enter/return
@@ -24,7 +22,7 @@ if __name__ == "__main__":
 	title = Label(root, text="Hello tkinter!")
 	title.grid(column=0, row=0, columnspan=2)
 
-	label = Label(root, text="Search term: ")
+	label = Label(root, text="Wikipedia URL: ")
 	label.grid(column=0, row=1)
 
 	search = Entry(root, bd=3)
