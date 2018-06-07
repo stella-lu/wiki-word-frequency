@@ -94,9 +94,9 @@ def make_pie(labels, freq):
 	ax.axis('equal')  # Ensures that pie is drawn as a circle.
 	plt.show()
 
-def main():
+def main(main_page):
 #if __name__ == "__main__":
-	main_page = 'https://en.wikipedia.org/wiki/Mila_Kunis'
+	#main_page = 'https://en.wikipedia.org/wiki/Main_Page'
 	page = requests.get(main_page, headers={'Connection': 'close'})
 
 	lst_of_text = modify_text(page)
@@ -106,5 +106,5 @@ def main():
 	labels, freq = trim_words(labels, freq)
 	make_pie(labels, freq)
 
+#main()
 
-main()

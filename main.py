@@ -2,18 +2,20 @@ import matplotlib
 matplotlib.use('TkAgg') #Stops crashing
 from tkinter import * 
 import sys
+import graph
 sys.path.append('/Users/Cactus/wiki-word-frequency/Google-Search-API')
-from google import google
 
-def find_url(search_term):
-	result = google.search(search_term)
-	print(result)
+def check_url(search_term):
+	if search_term[:30] == 'https://en.wikipedia.org/wiki/' and len(search_term) > 30:
+		graph.main(search_term)
+	else:
+		print('This is not a valid English Wikipedia page.')
 
 if __name__ == "__main__":
 	def get_text_button(): #On button click
-		find_url(search.get())
+		check_url(search.get())
 	def get_text_enter(search): #On pressing enter/return
-		find_url(search.widget.get())
+		check_url(search.widget.get())
 
 	root =Tk()
 	#root.geometry('{}x{}'.format(600, 400))
