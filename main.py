@@ -24,9 +24,10 @@ if __name__ == "__main__":
 		check_url(search.widget.get())
 
 	root =Tk()
+	root.title("Wikipedia Word Frequency")
 	pro_var, con_var, pre_var, art_var = IntVar(), IntVar(), IntVar(), IntVar() # Tkinter IntVars for Checkbuttons' status
 
-	title = Label(root, text="Wikipedia Word Frequency", width=60, height=2)
+	title = Label(root, text="Wikipedia Word Frequency - Stella Lu", width=60, height=2)
 	label = Label(root, text="Wikipedia URL: ", width=20, height=4)
 	search = Entry(root, bd=3, width=40)
 	search.bind("<Return>", get_text_enter)
