@@ -9,7 +9,7 @@ pronouns = ['ALL', 'ANOTHER', 'ANY', 'ANYBODY', 'ANYONE', 'ANYTHING', 'AS', 'BOT
 conjunctions = ['AND', 'OR', 'BUT', 'NOR', 'SO', 'FOR', 'YET', 'AFTER', 'ALTHOUGH', 'AS', 'AS IF', 'AS LONG AS', 'BECAUSE', 'BEFORE', 'EVEN IF', 'EVEN THOUGH', 'IF', 'ONCE', 'PROVIDED', 'SINCE', 'SO THAT', 'THAT', 'THOUGH', 'TILL', 'UNLESS', 'UNTIL', 'WHAT', 'WHEN', 'WHENEVER', 'WHEREVER', 'WHETHER', 'WHILE', 'ACCORDINGLY', 'ALSO', 'ANYWAY', 'BESIDES', 'CONSEQUENTLY', 'FINALLY', 'FOR EXAMPLE', 'FOR INSTANCE', 'FURTHER', 'FURTHERMORE', 'HENCE', 'HOWEVER', 'INCIDENTALLY', 'INDEED', 'IN FACT', 'INSTEAD', 'LIKEWISE', 'MEANWHILE', 'MOREOVER', 'NAMELY', 'NOW', 'OF COURSE', 'ON THE CONTRARY', 'ON THE OTHER HAND', 'OTHERWISE', 'NEVERTHELESS', 'NEXT', 'NONETHELESS', 'SIMILARLY', 'SO FAR', 'UNTIL NOW', 'STILL', 'THEN', 'THEREFORE', 'THUS']
 prepositions = ['ABOARD', 'ABOUT', 'ABOVE', 'ACROSS', 'AFTER', 'AGAINST', 'ALONG', 'AMID', 'AMONG', 'AROUND', 'AS', 'AT', 'BEFORE', 'BEHIND', 'BELOW', 'BENEATH', 'BESIDE', 'BETWEEN', 'BEYOND', 'BUT', 'BY', 'CONCERNING', 'CONSIDERING', 'DESPITE', 'DOWN', 'DURING', 'EXCEPT', 'FOLLOWING', 'FOR', 'FROM', 'IN', 'INSIDE', 'INTO', 'LIKE', 'MINUS', 'NEAR', 'NEXT', 'OF', 'OFF', 'ON', 'ONTO', 'OPPOSITE', 'OUT', 'OUTSIDE', 'OVER', 'PAST', 'PER', 'PLUS', 'REGARDING', 'ROUND', 'SAVE', 'SINCE', 'THAN', 'THROUGH', 'TO', 'TOWARD', 'UNDER', 'UNDERNEATH', 'UNLIKE', 'UNTIL', 'UP', 'UPON', 'VERSUS', 'VIA', 'WITH', 'WITHIN', 'WITHOUT']
 articles = ['THE', 'A', 'AN']
-parts_of_speech = pronouns+conjunctions+prepositions+articles
+parts_of_speech = {'pronouns':pronouns, 'conjunctions':conjunctions, 'prepositions':prepositions, 'articles':articles}
 
 def modify_text(page):
 	soup = BeautifulSoup(page.text, 'html.parser')
@@ -28,10 +28,6 @@ def modify_text(page):
 	
 	return text
 
-def remove_words(lst):
-	new_lst = [word for word in lst if word.upper() not in parts_of_speech]
-	return new_lst
-
 def make_one_string(text):
 	""" Takes a list and turns each element into a string """
 	for i in range(len(text)):
@@ -49,6 +45,14 @@ def remove_misc_str(text, str_to_remove):
 		if s in text:
 			text = text.replace(s, '')
 	return text
+
+def remove_pos(lst, pos_dict):
+	""" Removes parts of speech that the user has selected """
+	new_lst = lst
+	for key, value in pos_dict.items():
+		if value == 1:
+			new_lst = [word for word in new_lst if word.upper() not in parts_of_speech[key]]
+	return new_lst
 
 def count(lst):
 	""" Takes one string and returns a list of labels and a list of word frequencies"""
@@ -76,7 +80,7 @@ def order_lists(labels, freq):
 	freq = list(unzipped[1])
 	return labels, freq
 
-def trim_words(labels, freq):
+def top_words(labels, freq):
 	""" Return 20 most frequent words """
 	labels, freq, remaining_labels, remaining_freq = labels[:20], freq[:20], labels[20:], freq[20:]
 	return labels, freq
@@ -91,15 +95,14 @@ def make_pie(labels, freq):
 
 	fig, ax = plt.subplots()
 	ax.pie(freq, labels=labels, autopct=return_freq(freq), labeldistance=1.05, startangle=90, counterclock=False, rotatelabels=True)
-	ax.axis('equal')  # Ensures that pie is drawn as a circle.
+	ax.axis('equal')  # Draw pie as 2D circle
 	plt.show()
 
-def main(url):
+def main(url, pos_dict):
 	page = requests.get(url, headers={'Connection': 'close'})
-
 	lst_of_text = modify_text(page)
-	lst_of_text = remove_words(lst_of_text)
+	lst_of_text = remove_pos(lst_of_text, pos_dict)
 	labels, freq = count(lst_of_text)
 	labels, freq = order_lists(labels, freq)
-	labels, freq = trim_words(labels, freq)
+	labels, freq = top_words(labels, freq)
 	make_pie(labels, freq)
