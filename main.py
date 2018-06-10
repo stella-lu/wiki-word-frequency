@@ -5,11 +5,14 @@ import sys
 import graph
 sys.path.append('/Users/Cactus/wiki-word-frequency/Google-Search-API')
 
-def check_url(search_term):
-	if search_term[:30] == 'https://en.wikipedia.org/wiki/' and len(search_term) > 30:
-		graph.main(search_term)
+def check_url(url):
+	""" Checks if the url is a valid wikipedia page """
+	if url[:30] == 'https://en.wikipedia.org/wiki/' and len(url) > 30:
+		warning.grid_remove()
+		graph.main(url)
 	else:
-		print('This is not a valid English Wikipedia page.')
+		warning.grid()
+		
 
 if __name__ == "__main__":
 	def get_text_button(): #On button click
@@ -18,25 +21,24 @@ if __name__ == "__main__":
 		check_url(search.widget.get())
 
 	root =Tk()
-	#root.geometry('{}x{}'.format(600, 400))
-	#Make layout look good when uncommenting the above line
 
-	title = Label(root, text="Hello tkinter!")
-	title.grid(column=0, row=0, columnspan=2)
-
-	label = Label(root, text="Wikipedia URL: ")
-	label.grid(column=0, row=1)
-
-	search = Entry(root, bd=3)
-	search.bind("<Return>", get_text_enter)  
-	search.grid(column=1, row=1)
-
-	button = Button(root, text="Submit", command=get_text_button)
-	button.grid(column=1, row=2, columnspan=1)
+	title = Label(root, text="Wikipedia Word Frequency", width=60, height=2)
+	label = Label(root, text="Wikipedia URL: ", width=20, height=4)
+	search = Entry(root, bd=3, width=40)
+	search.bind("<Return>", get_text_enter)
+	submit = Button(root, text="Submit", command=get_text_button)
 	exit = Button(root, text="Exit", command=root.destroy)
-	exit.grid(column=0, row=2, columnspan=1)
+	empty = Label(root, text="      ")
+	
+	title.grid(column=0, row=0, columnspan=2)
+	label.grid(column=0, row=1)
+	search.grid(column=1, row=1)
+	submit.grid(column=1, row=2)
+	exit.grid(column=0, row=2)
+	empty.grid(column=0, row=3, columnspan=2)
 
-	root.columnconfigure(0, weight=1)
-	root.rowconfigure(0, weight=1)
+	warning = Label(root, text="This is not a valid English Wikipedia page.")
+	warning.grid(column=0, row=3, columnspan=2)
+	warning.grid_remove()
 
 	root.mainloop()
