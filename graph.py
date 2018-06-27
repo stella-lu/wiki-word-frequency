@@ -94,7 +94,7 @@ def make_pie(labels, freq):
 			return int(round(pct*total)/100)
 		return show_freq
 
-	fig, ax = plt.subplots()
+	fig, ax = plt.subplots(figsize=(7, 7))
 	ax.pie(freq, labels=labels, autopct=return_freq(freq), colors=pastel, labeldistance=1.05, startangle=90, counterclock=False, rotatelabels=True)
 	ax.axis('equal')  # Draw pie as 2D circle
 	plt.show()
