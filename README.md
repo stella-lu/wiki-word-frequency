@@ -11,4 +11,4 @@ App:
 
 Chart:
 
-![Pie Chart of Wellington Wikipedia Page](/images/wellington_pie_chart.png)
+![Pie Chart of Wellington Wikipedia Page](/images/wellington_pie_chart.jpg)
