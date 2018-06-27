@@ -10,6 +10,7 @@ conjunctions = ['AND', 'OR', 'BUT', 'NOR', 'SO', 'FOR', 'YET', 'AFTER', 'ALTHOUG
 prepositions = ['ABOARD', 'ABOUT', 'ABOVE', 'ACROSS', 'AFTER', 'AGAINST', 'ALONG', 'AMID', 'AMONG', 'AROUND', 'AS', 'AT', 'BEFORE', 'BEHIND', 'BELOW', 'BENEATH', 'BESIDE', 'BETWEEN', 'BEYOND', 'BUT', 'BY', 'CONCERNING', 'CONSIDERING', 'DESPITE', 'DOWN', 'DURING', 'EXCEPT', 'FOLLOWING', 'FOR', 'FROM', 'IN', 'INSIDE', 'INTO', 'LIKE', 'MINUS', 'NEAR', 'NEXT', 'OF', 'OFF', 'ON', 'ONTO', 'OPPOSITE', 'OUT', 'OUTSIDE', 'OVER', 'PAST', 'PER', 'PLUS', 'REGARDING', 'ROUND', 'SAVE', 'SINCE', 'THAN', 'THROUGH', 'TO', 'TOWARD', 'UNDER', 'UNDERNEATH', 'UNLIKE', 'UNTIL', 'UP', 'UPON', 'VERSUS', 'VIA', 'WITH', 'WITHIN', 'WITHOUT']
 articles = ['THE', 'A', 'AN']
 parts_of_speech = {'pronouns':pronouns, 'conjunctions':conjunctions, 'prepositions':prepositions, 'articles':articles}
+pastel = ["#bae1ff", "#ffabab", "#ffffba", "#baffc9", "#ffdfba", "#ffb5e8"]
 
 def modify_text(page):
 	soup = BeautifulSoup(page.text, 'html.parser')
@@ -94,7 +95,7 @@ def make_pie(labels, freq):
 		return show_freq
 
 	fig, ax = plt.subplots()
-	ax.pie(freq, labels=labels, autopct=return_freq(freq), labeldistance=1.05, startangle=90, counterclock=False, rotatelabels=True)
+	ax.pie(freq, labels=labels, autopct=return_freq(freq), colors=pastel, labeldistance=1.05, startangle=90, counterclock=False, rotatelabels=True)
 	ax.axis('equal')  # Draw pie as 2D circle
 	plt.show()
 
